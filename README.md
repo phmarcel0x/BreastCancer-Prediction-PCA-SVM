@@ -13,8 +13,22 @@ Breakdown of the steps:
 - **Evaluation**: I assess the models' performance using metrics such as accuracy, confusion matrices, and classification reports to determine the best-performing model.
 
 ### Results
+The results of this project demonstrated that SVM with an RBF kernel outperformed the linear kernel models, particularly for small values of the hyperparameter C and gamma.
 
-Through PCA, I reduced the complexity of the dataset while keeping most of the important variance intact. The SVM models performed well, with the RBF kernel proving to be particularly effective for this dataset. The classification results gave strong accuracy rates and insightful confusion matrices, showing which cases were most difficult to classify.
+* **Linear Kernel Results**: The linear models performed well, especially with smaller C values. For instance, with **C=2**, the accuracy was **96%**, and precision/recall metrics were high for both benign and malignant classifications.
+
+* **RBF Kernel Results**: The best performance came from the **RBF kernel** with **C=2** and **gamma=0.01**, which achieved **98% accuracy** on the validation set. In contrast, higher C and gamma values led to poorer performance due to overfitting, particularly with **C=52** and **gamma=12** where accuracy dropped to **51%**.
+
+* **Testing on Full Dataset**: The best-performing model from the RBF kernel was tested on the full dataset, resulting in a **70% accuracy** and an insightful confusion matrix showing **114 true positives** but also some misclassifications. However, after applying PCA for feature reduction, the accuracy improved to **78%** with fewer features, indicating that dimensionality reduction can indeed enhance performance by reducing noise in the dataset.
+
+These results indicate that **careful tuning of hyperparameters** and **feature reduction** via PCA can significantly improve model performance, particularly for complex datasets like breast cancer diagnosis.
+
+### Potential Future Improvements
+While 78% accuracy shows progress, there's room for improvement in medical diagnostics. Potential avenues for enhancing performance include:
+
+- **Deep Learning**: Exploring neural networks, particularly Convolutional Neural Networks (CNNs), which have shown promise in medical image analysis.
+- **Ensemble Methods**: Combining multiple models (e.g., Random Forests, Gradient Boosting) with our SVM approach could potentially improve overall accuracy.
+- Cross-Validation: Implementing k-fold cross-validation could provide a more reliable estimate of model performance and help in fine-tuning hyperparameters.
 
 ### Tech Stack
 
