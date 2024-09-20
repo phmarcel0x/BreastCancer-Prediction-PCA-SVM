@@ -1,7 +1,6 @@
 # %% [markdown]
-# # 6COM1044 - Data Classification Coursework
+# # Breast Cancer Prediction with PCA and SVM
 # - Marcelo Pedroza Hernandez
-# - UH Student ID: 23033126
 # - April 10, 2024
 
 # %%
@@ -14,19 +13,18 @@ from sklearn.decomposition import PCA
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report
-from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 
 # %% [markdown]
-# ### Task 1 - Data Exploration
-# - Use Principal Component Analysis (PCA) to understand the characteristics of the datasets.
+# ### Data Exploration
+# - Using Principal Component Analysis (PCA) to understand the characteristics of the datasets.
 
 # %%
 # Task 1 - (a)
 
 # Load the training and test datasets
-train_df = pd.read_csv("../mlnc_DATA/wdbc_training.csv")
-test_df = pd.read_csv("../mlnc_DATA/wdbc_test.csv")
+train_df = pd.read_csv("../data/wdbc_training.csv")
+test_df = pd.read_csv("../data/wdbc_test.csv")
 
 # Save the 30 features and the labels in separate variables for both datasets
 y_train_I = train_df.iloc[:, 1]
@@ -97,8 +95,8 @@ plt.show()
 figure1.savefig('Task1_D_Plots.png')
 
 # %% [markdown]
-# ### Task 2 - Data Preparation
-# - Divide the training dataset into a smaller training set and a validation set, and normalise the data.
+# ### Data Preparation
+# - Dividing the training dataset into a smaller training set and a validation set, and normalising the data.
 
 # %%
 # Task 2 - (a)
@@ -132,8 +130,8 @@ std_val_norm_all_features = np.std(X_val_norm, axis=0)
 print(f"Standard Deviation of the features in the normalised validation set:\n {std_val_norm_all_features}")  # Near 1 (unit std) = OK
 
 # %% [markdown]
-# ### Task 3 - SVM Classification
-# - Build a support vector classifier using SVC from sklearn library.
+# ### SVM Classification
+# - Building a support vector classifier using SVC from sklearn library.
 
 # %%
 # Task 3 - (a) Linear Kernel with C in [2, 52]
@@ -148,7 +146,7 @@ y_pred1_lin = model1_lin.predict(X_val_norm)
 print(f"Classification Report for C=2:\n{classification_report(y_val, y_pred1_lin)}")
 
 # Middle C value
-svc2_lin = SVC(kernel='linear', C=12)  
+svc2_lin = SVC(kernel='linear', C=27)  
 model2_lin = svc2_lin.fit(X_train_II_norm, y_train_II)
 y_pred2_lin = model2_lin.predict(X_val_norm)
 print(f"Classification Report for C=27:\n{classification_report(y_val, y_pred2_lin)}")
@@ -172,10 +170,10 @@ y_pred1_rbf = model1_rbf.predict(X_val_norm)
 print(f"Classification Report for C=2 and gamma=0.01:\n{classification_report(y_val, y_pred1_rbf)}")
 
 # Geometric means of the C and gamma values
-svm2_rbf = SVC(kernel='rbf', C=12, gamma=0.35)  
+svm2_rbf = SVC(kernel='rbf', C=27, gamma=0.35)  
 model2_rbf = svm2_rbf.fit(X_train_II_norm, y_train_II)
 y_pred2_rbf = model2_rbf.predict(X_val_norm)
-print(f"Classification Report for C=12 and gamma=0.35:\n{classification_report(y_val, y_pred2_rbf)}")
+print(f"Classification Report for C=27 and gamma=0.35:\n{classification_report(y_val, y_pred2_rbf)}")
 
 # Largest C and gamma values
 svm3_rbf = SVC(kernel='rbf', C=52, gamma=12)  
@@ -189,17 +187,17 @@ print(f"Classification Report for C=52 and gamma=12:\n{classification_report(y_v
 # Evaluate the best-performing model on the whole normalised training set
 svm_best = SVC(kernel='rbf', C=2, gamma=0.01) # Best C and gamma values from Task 3 (a)
 model_best = svm_best.fit(X_train_I_norm, y_train_I)
-y_pred_best = model_best.predict(X_train_I_norm)
-print(f"Classification Report for the best-performing model:\n{classification_report(y_train_I, y_pred_best)}")
+y_pred_best = model_best.predict(X_test_norm)
+print(f"\nClassification Report for the best-performing model:\n{classification_report(y_test, y_pred_best)}")
 
 # Evaluate using the Confusion Matrix
-conf_matrix_best = confusion_matrix(y_train_I, y_pred_best)
+conf_matrix_best = confusion_matrix(y_test, y_pred_best)
 print(f"\nConfusion Matrix for the best-performing model:\n{conf_matrix_best}")
 print(f"TP, FP, FN, TN: {conf_matrix_best.ravel()}")
 
 # %% [markdown]
-# ### Task 4 - SVM classification with features reduced using PCA
-# - Extract features using PCA and building a support vector classifier with extracted features on the training set.
+# ### SVM classification with features reduced using PCA
+# - Extracting features using PCA and building a support vector classifier with extracted features on the training set.
 
 # %%
 # Task 4 - (b)
@@ -240,5 +238,8 @@ print(f"\nClassification Report for the best-performing model with reduced featu
 confusion_matrix_pca_best = confusion_matrix(y_test, y_pred_pca_best)
 print(f"\nConfusion Matrix for the best-performing model with reduced features:\n{confusion_matrix_pca_best}")
 print(f"TP, FP, FN, TN: {confusion_matrix_pca_best.ravel()}")
+
+# %%
+
 
 
