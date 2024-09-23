@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Breast Cancer Prediction with PCA and SVM
+# ## Breast Cancer Prediction with PCA and SVM
 # - Marcelo Pedroza Hernandez
 # - April 10, 2024
 
@@ -16,12 +16,10 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 
 # %% [markdown]
-# ### Data Exploration
+# ### Data Exploration & Visualization
 # - Using Principal Component Analysis (PCA) to understand the characteristics of the datasets.
 
 # %%
-# Task 1 - (a)
-
 # Load the training and test datasets
 train_df = pd.read_csv("../data/wdbc_training.csv")
 test_df = pd.read_csv("../data/wdbc_test.csv")
@@ -33,8 +31,6 @@ y_test = test_df.iloc[:, 1]
 X_test = test_df.iloc[:, 2:32]
 
 # %%
-# Task 1 - (b)
-
 # Show a scatter plot of the first two features of the training dataset
 plt.scatter(X_train_I.iloc[:, 0], X_train_I.iloc[:, 1], c=y_train_I)
 plt.xlabel('Feature 1', fontweight='bold')
@@ -43,9 +39,7 @@ plt.title('Scatter plot of the first two features of the training dataset', font
 plt.show()
 
 # %%
-# Task 1 - (c)
-
-# Normalise the training (I) and test datasets
+# Normalize the training (I) and test datasets
 X_train_I_norm = StandardScaler().fit_transform(X_train_I)
 X_test_norm = StandardScaler().fit_transform(X_test)
 
@@ -56,8 +50,6 @@ std_test_norm_feature1 = np.std(X_test_norm[:, 0])
 print("Standard deviation of the first feature in the normalized test set: ", std_test_norm_feature1)  # Near 1 = OK
 
 # %%
-# Task 1 - (d)
-
 # Perform a PCA analysis on the scaled training set (I)
 pca = PCA( )
 projections = pca.fit_transform(X_train_I_norm)  # The projections matrix represents the eigenvectors of the covariance matrix
@@ -71,8 +63,6 @@ print(f"\nSum of Variance Captured by PCA components: {variance_ratio_sum}")
 
 
 # %%
-# Task 1 - (d) Plots
-
 # Create a figure with two subplots
 figure1, ax = plt.subplots(1, 2, figsize=(15, 5))
 
@@ -96,11 +86,9 @@ figure1.savefig('Task1_D_Plots.png')
 
 # %% [markdown]
 # ### Data Preparation
-# - Dividing the training dataset into a smaller training set and a validation set, and normalising the data.
+# - Dividing the training dataset into a smaller training set and a validation set, and normalize the data.
 
 # %%
-# Task 2 - (a)
-
 # Divide the training set using 30% as the validation set, randomly selecting the points
 X_train_II, X_val, y_train_II, y_val = train_test_split(X_train_I, y_train_I, test_size=0.3, random_state=42, stratify=y_train_I)  # 42 is the answer to everything :)
 
@@ -109,12 +97,10 @@ print(f"Number of points in the smaller training set: {X_train_II.shape[0]}")
 print(f"Number of points in the validation set: {X_val.shape[0]}")
 
 # %%
-# Task 2 - (b)
-
-# Normalise the smaller training set (II)
+# Normalize the smaller training set (II)
 X_train_II_norm = StandardScaler().fit_transform(X_train_II)
 
-# Normalise the validation set
+# Normalize the validation set
 X_val_norm = StandardScaler().fit_transform(X_val)
 
 # Report the mean and standard deviation for all features in the normalized smaller training set (II)
@@ -134,8 +120,6 @@ print(f"Standard Deviation of the features in the normalized validation set:\n {
 # - Building a support vector classifier using SVC from sklearn library.
 
 # %%
-# Task 3 - (a) Linear Kernel with C in [2, 52]
-
 # Evaluate performance using a linear kernel with three different C values
 print("\nClassification Reports for Linear Kernel with Different C Values on smaller training set (II) and validation set:")
 
@@ -158,8 +142,6 @@ y_pred3_lin = model3_lin.predict(X_val_norm)
 print(f"Classification Report for C=52:\n{classification_report(y_val, y_pred3_lin)}")
 
 # %%
-# Task 3 - (a) RBF Kernel with C in [2, 52] and gamma in [0.01, 12]
-
 # Evaluate performance using an RBF kernel with three different C and gamma values
 print("\nClassification Reports for RBF Kernel with Different C and Gamma Values:")
 
@@ -182,8 +164,6 @@ y_pred3_rbf = model3_rbf.predict(X_val_norm)
 print(f"Classification Report for C=52 and gamma=12:\n{classification_report(y_val, y_pred3_rbf)}")
 
 # %%
-# Task 3 - (c) Further Evaluation of the Best-Performing Model from Task 3 - (a)
-
 # Evaluate the best-performing model on the whole normalized training set
 svm_best = SVC(kernel='rbf', C=2, gamma=0.01) # Best C and gamma values from Task 3 (a)
 model_best = svm_best.fit(X_train_I_norm, y_train_I)
@@ -196,18 +176,16 @@ print(f"\nConfusion Matrix for the best-performing model:\n{conf_matrix_best}")
 print(f"TP, FP, FN, TN: {conf_matrix_best.ravel()}")
 
 # %% [markdown]
-# ### SVM classification with features reduced using PCA
-# - Extracting features using PCA and building a support vector classifier with extracted features on the training set.
+# ### Task 4 - SVM classification with features reduced using PCA
+# - Extract features using PCA and building a support vector classifier with extracted features on the training set.
 
 # %%
-# Task 4 - (b)
-
-# Reduce the features in the normalized training set (I) using the first 4 principal components
+# Reduce the features in the normalised training set (I) using the first 4 principal components
 pca_chosen = PCA(n_components=4)
 proj_X_train_I_norm_pca = pca_chosen.fit_transform(X_train_I_norm)   
 print(f"\nShape of the reduced training set (I) using the first 4 principal components: {proj_X_train_I_norm_pca.shape}")
 
-# Reduce the features in the normalized test set using the first 4 principal components
+# Reduce the features in the normalised test set using the first 4 principal components
 proj_X_test_norm_pca = pca_chosen.transform(X_test_norm)
 print(f"Shape of the reduced test set using the first 4 principal components: {proj_X_test_norm_pca.shape}")
 
@@ -218,9 +196,7 @@ variance_ratio_sum_pca = np.sum(variance_ratios_pca)  # Confirm the sum of the v
 print(f"\nSum of Variance Captured by the first 4 PCA components: {variance_ratio_sum_pca}")
 
 # %%
-# Task 4 - (c)
-
-# Normalise the training set and the test set after the feature reduction
+# Normalize the training set and the test set after the feature reduction
 proj_X_train_I_norm_pca = StandardScaler().fit_transform(proj_X_train_I_norm_pca)
 proj_X_test_norm_pca = StandardScaler().fit_transform(proj_X_test_norm_pca)
 
@@ -238,8 +214,5 @@ print(f"\nClassification Report for the best-performing model with reduced featu
 confusion_matrix_pca_best = confusion_matrix(y_test, y_pred_pca_best)
 print(f"\nConfusion Matrix for the best-performing model with reduced features:\n{confusion_matrix_pca_best}")
 print(f"TP, FP, FN, TN: {confusion_matrix_pca_best.ravel()}")
-
-# %%
-
 
 
