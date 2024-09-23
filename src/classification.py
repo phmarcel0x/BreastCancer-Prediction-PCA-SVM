@@ -49,11 +49,11 @@ plt.show()
 X_train_I_norm = StandardScaler().fit_transform(X_train_I)
 X_test_norm = StandardScaler().fit_transform(X_test)
 
-# Report the mean and standard deviation for the first feature in the normalised test set
+# Report the mean and standard deviation for the first feature in the normalized test set
 mean_test_norm_feature1 = np.mean(X_test_norm[:, 0])
-print("Mean of the first feature in the normalised test set: ", mean_test_norm_feature1)  # Near 0 = OK
+print("Mean of the first feature in the normalized test set: ", mean_test_norm_feature1)  # Near 0 = OK
 std_test_norm_feature1 = np.std(X_test_norm[:, 0])
-print("Standard deviation of the first feature in the normalised test set: ", std_test_norm_feature1)  # Near 1 = OK
+print("Standard deviation of the first feature in the normalized test set: ", std_test_norm_feature1)  # Near 1 = OK
 
 # %%
 # Task 1 - (d)
@@ -117,17 +117,17 @@ X_train_II_norm = StandardScaler().fit_transform(X_train_II)
 # Normalise the validation set
 X_val_norm = StandardScaler().fit_transform(X_val)
 
-# Report the mean and standard deviation for all features in the normalised smaller training set (II)
+# Report the mean and standard deviation for all features in the normalized smaller training set (II)
 mean_train_II_norm_all_features = np.mean(X_train_II_norm, axis=0)
-print(f"\nMean of the features in the normalised smaller training set:\n {mean_train_II_norm_all_features}")  # Near 0 = OK
+print(f"\nMean of the features in the normalized smaller training set:\n {mean_train_II_norm_all_features}")  # Near 0 = OK
 std_train_II_norm_all_features = np.std(X_train_II_norm, axis=0)
-print(f"Standard Deviation of the features in the normalised smaller training set:\n {std_train_II_norm_all_features}")  # Near 1 (unit std) = OK
+print(f"Standard Deviation of the features in the normalized smaller training set:\n {std_train_II_norm_all_features}")  # Near 1 (unit std) = OK
 
-# Report the mean and standard deviation for all features in the normalised validation set 
+# Report the mean and standard deviation for all features in the normalized validation set 
 mean_val_norm_all_features = np.mean(X_val_norm, axis=0)
-print(f"\nMean of the features in the normalised validation set:\n {mean_val_norm_all_features}")  # Near 0 = OK
+print(f"\nMean of the features in the normalized validation set:\n {mean_val_norm_all_features}")  # Near 0 = OK
 std_val_norm_all_features = np.std(X_val_norm, axis=0)
-print(f"Standard Deviation of the features in the normalised validation set:\n {std_val_norm_all_features}")  # Near 1 (unit std) = OK
+print(f"Standard Deviation of the features in the normalized validation set:\n {std_val_norm_all_features}")  # Near 1 (unit std) = OK
 
 # %% [markdown]
 # ### SVM Classification
@@ -184,7 +184,7 @@ print(f"Classification Report for C=52 and gamma=12:\n{classification_report(y_v
 # %%
 # Task 3 - (c) Further Evaluation of the Best-Performing Model from Task 3 - (a)
 
-# Evaluate the best-performing model on the whole normalised training set
+# Evaluate the best-performing model on the whole normalized training set
 svm_best = SVC(kernel='rbf', C=2, gamma=0.01) # Best C and gamma values from Task 3 (a)
 model_best = svm_best.fit(X_train_I_norm, y_train_I)
 y_pred_best = model_best.predict(X_test_norm)
@@ -202,12 +202,12 @@ print(f"TP, FP, FN, TN: {conf_matrix_best.ravel()}")
 # %%
 # Task 4 - (b)
 
-# Reduce the features in the normalised training set (I) using the first 4 principal components
+# Reduce the features in the normalized training set (I) using the first 4 principal components
 pca_chosen = PCA(n_components=4)
 proj_X_train_I_norm_pca = pca_chosen.fit_transform(X_train_I_norm)   
 print(f"\nShape of the reduced training set (I) using the first 4 principal components: {proj_X_train_I_norm_pca.shape}")
 
-# Reduce the features in the normalised test set using the first 4 principal components
+# Reduce the features in the normalized test set using the first 4 principal components
 proj_X_test_norm_pca = pca_chosen.transform(X_test_norm)
 print(f"Shape of the reduced test set using the first 4 principal components: {proj_X_test_norm_pca.shape}")
 
