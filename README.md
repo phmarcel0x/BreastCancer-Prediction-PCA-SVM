@@ -30,6 +30,8 @@ While 78% accuracy shows progress, there's room for improvement in medical diagn
 - **Ensemble Methods**: Combining multiple models (e.g., Random Forests, Gradient Boosting) with our SVM approach could potentially improve overall accuracy.
 - **Cross-Validation**: Implementing k-fold cross-validation could provide a more reliable estimate of model performance and help in fine-tuning hyperparameters.
 
+## 
+
 ![Python](https://img.shields.io/badge/-Python-3776AB?logo=python&logoColor=white&style=for-the-badge)
 ![NumPy](https://img.shields.io/badge/-NumPy-013243?logo=numpy&logoColor=white&style=for-the-badge)
 ![Pandas](https://img.shields.io/badge/-Pandas-150458?logo=pandas&logoColor=white&style=for-the-badge)
