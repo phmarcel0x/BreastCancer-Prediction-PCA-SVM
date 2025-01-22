@@ -27,7 +27,7 @@ These results indicate that **careful tuning of hyperparameters** and **feature 
 While 78% accuracy shows progress, there's room for improvement in medical diagnostics. Potential avenues for enhancing performance include:
 
 - **Deep Learning**: Exploring neural networks, particularly Convolutional Neural Networks (CNNs), which have shown promise in medical image analysis.
-- **Ensemble Methods**: Combining multiple models (e.g., Random Forests, Gradient Boosting) with our SVM approach could potentially improve overall accuracy.
+- **Ensemble Methods**: Combining multiple models (e.g., Random Forests, Gradient Boosting) with the SVM approach could potentially improve overall accuracy.
 - **Cross-Validation**: Implementing k-fold cross-validation could provide a more reliable estimate of model performance and help in fine-tuning hyperparameters.
 
 ---
