@@ -1,4 +1,4 @@
-# Breast Cancer Prediction with PCA and SVM
+# Breast Cancer Prediction with PCA and SVM  
 
 This project explores how machine learning techniques can be applied to real-world medical datasets, particularly using **Principal Component Analysis (PCA)** for feature reduction and **Support Vector Machines (SVM)** for classification. The dataset I’m using is the well-known **Wisconsin Diagnostic Breast Cancer (WDBC)** [dataset](https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data).
 
